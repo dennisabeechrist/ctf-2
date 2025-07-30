@@ -20,49 +20,55 @@
             border: 2px solid #00ffff;
             border-radius: 15px;
             padding: 30px;
-            width: 90%;
+            width: 95%;
             max-width: 1000px;
             max-height: 90vh;
             overflow-y: auto;
             box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
         h1 {
             margin-top: 0;
             color: #00ffff;
+            text-align: center;
         }
 
         p {
             font-size: 1.1em;
             color: #cccccc;
+            text-align: center;
+            margin-bottom: 20px;
         }
 
-        .links {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            margin-top: 20px;
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            gap: 10px;
+            width: 100%;
         }
 
-        a {
-            margin: 5px;
-            padding: 10px 15px;
+        .grid button {
+            padding: 10px;
             background-color: #2e2e2e;
             color: #00ffff;
-            text-decoration: none;
+            border: none;
             border-radius: 5px;
             cursor: pointer;
-            transition: background-color 0.3s ease;
+            transition: background-color 0.2s ease;
+            font-weight: bold;
         }
 
-        a:hover {
+        .grid button:hover {
             background-color: #00aaaa;
             color: #000;
         }
     </style>
 
     <script>
-        const secret = 142;  // Only one link leads to the flag
+        const secret = 142;  // The correct button index
 
         function goto(num) {
             if (num === secret) {
@@ -76,12 +82,12 @@
 <body>
     <div class="container">
         <h1>HackPulse CTF</h1>
-        <p>⚡ One of these mysterious portals leads to the flag. You only need one click... but will it be the right one?</p>
+        <p>One of these buttons leads to the flag. Can you find it?</p>
 
-        <div class="links" id="links">
+        <div class="grid">
             <script>
                 for (let i = 1; i <= 200; i++) {
-                    document.write('<a onclick="goto(' + i + ')">Click Me #' + i + '</a>');
+                    document.write('<button onclick="goto(' + i + ')">Click #' + i + '</button>');
                 }
             </script>
         </div>
