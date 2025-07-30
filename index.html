@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>HackPulse CTF - Click the Right One</title>
+    <style>
+        body {
+            background-color: #101010;
+            color: #ffffff;
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+        a {
+            display: inline-block;
+            margin: 5px;
+            padding: 10px 15px;
+            background-color: #1e1e1e;
+            color: #00ffff;
+            text-decoration: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+    <script>
+        const secret = 142;  // Only link number 142 is correct
+
+        function goto(num) {
+            if (num === secret) {
+                window.location.href = 'flag.html';
+            } else {
+                window.location.href = 'redirect.html';
+            }
+        }
+    </script>
+</head>
+<body>
+    <h1>HackPulse CTF</h1>
+    <p>One of these buttons leads to glory. Choose wisely.</p>
+
+    <div id="links">
+        <script>
+            for (let i = 1; i <= 200; i++) {
+                document.write('<a onclick="goto(' + i + ')">Click Me #' + i + '</a>');
+            }
+        </script>
+    </div>
+</body>
+</html>
