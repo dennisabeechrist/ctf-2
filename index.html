@@ -7,21 +7,62 @@
             background-color: #101010;
             color: #ffffff;
             font-family: Arial, sans-serif;
-            text-align: center;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
         }
+
+        .container {
+            background-color: #1a1a1a;
+            border: 2px solid #00ffff;
+            border-radius: 15px;
+            padding: 30px;
+            width: 90%;
+            max-width: 1000px;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
+        }
+
+        h1 {
+            margin-top: 0;
+            color: #00ffff;
+        }
+
+        p {
+            font-size: 1.1em;
+            color: #cccccc;
+        }
+
+        .links {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
         a {
-            display: inline-block;
             margin: 5px;
             padding: 10px 15px;
-            background-color: #1e1e1e;
+            background-color: #2e2e2e;
             color: #00ffff;
             text-decoration: none;
             border-radius: 5px;
             cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        a:hover {
+            background-color: #00aaaa;
+            color: #000;
         }
     </style>
+
     <script>
-        const secret = 142;  // Only link number 142 is correct
+        const secret = 142;  // Only one link leads to the flag
 
         function goto(num) {
             if (num === secret) {
@@ -33,15 +74,17 @@
     </script>
 </head>
 <body>
-    <h1>HackPulse CTF</h1>
-    <p>One of these buttons leads to glory. Choose wisely.</p>
+    <div class="container">
+        <h1>HackPulse CTF</h1>
+        <p>⚡ One of these mysterious portals leads to the flag. You only need one click... but will it be the right one?</p>
 
-    <div id="links">
-        <script>
-            for (let i = 1; i <= 200; i++) {
-                document.write('<a onclick="goto(' + i + ')">Click Me #' + i + '</a>');
-            }
-        </script>
+        <div class="links" id="links">
+            <script>
+                for (let i = 1; i <= 200; i++) {
+                    document.write('<a onclick="goto(' + i + ')">Click Me #' + i + '</a>');
+                }
+            </script>
+        </div>
     </div>
 </body>
 </html>
