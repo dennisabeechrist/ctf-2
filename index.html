@@ -74,18 +74,21 @@
             display: none;
         }
     </style>
-
     <script>
+        // Button 142 is the winner.
+        // 142 ^ 7 = 141 → "MTQx"
         function v3rfy(n) {
-            const correctEnc = 'MTQx'; // base64 of 141 (because 142 ^ 7 = 141)
+            const encoded = 'MTQx'; // base64 of 141
             const key = 7;
-            const correct = parseInt(atob(correctEnc)) ^ key;
+            const correct = parseInt(atob(encoded)) ^ key;
 
             if (n === correct) {
-                const encodedFlag = 'ZmxhZ3tsdWNreV9jbGlja19jdGZfbWFzdGVyfQ=='; // base64 of flag{lucky_click_ctf_master}
+                const encodedFlag = 'ZmxhZ3tsdWNreV9jbGlja19jdGZfbWFzdGVyfQ=='; // flag{lucky_click_ctf_master}
                 const flag = atob(encodedFlag);
-                document.getElementById("flag").innerText = "🎉 Congratulations! " + flag;
-                document.getElementById("flag").style.display = "block";
+                const flagElem = document.getElementById("flag");
+                flagElem.innerText = "🎉 Congratulations! " + flag;
+                flagElem.style.display = "block";
+                window.scrollTo(0, document.body.scrollHeight);
             } else {
                 window.location.href = 'redirect.html';
             }
@@ -94,19 +97,18 @@
         window.onload = function () {
             const grid = document.querySelector('.grid');
             for (let i = 1; i <= 200; i++) {
-                let btn = document.createElement("button");
+                const btn = document.createElement("button");
                 btn.innerText = "Click #" + i;
-                btn.onclick = () => v3rfy(i);
+                btn.addEventListener("click", () => v3rfy(i));
                 grid.appendChild(btn);
             }
-        }
+        };
     </script>
 </head>
 <body>
     <div class="container">
         <h1>HackPulse CTF</h1>
         <p>One of these buttons leads to the flag. Can you find it?</p>
-
         <div class="grid"></div>
         <div id="flag"></div>
     </div>
