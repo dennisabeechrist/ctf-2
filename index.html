@@ -65,19 +65,41 @@
             background-color: #00aaaa;
             color: #000;
         }
+
+        #flag {
+            margin-top: 20px;
+            font-family: monospace;
+            color: #00ff00;
+            font-size: 1.2em;
+            display: none;
+        }
     </style>
 
     <script>
         function v3rfy(n) {
-        const encoded = 'Mjgx'; 
-        const key = 7;
-        const decrypted = parseInt(atob(encoded)) ^ key;
-        if (n === decrypted) {
-            location.href = 'flag.html';
-        } else {
-            location.href = 'redirect.html';
+            const correctEnc = 'MTM1'; 
+            const key = 7;
+            const correct = parseInt(atob(correctEnc)) ^ key;
+
+            if (n === correct) {
+                const encodedFlag = 'ZmxhZ3tsdWNreV9jbGlja19jdGZfbWFzdGVyfQ=='; 
+                const flag = atob(encodedFlag);
+                document.getElementById("flag").innerText = "Congratulations! " + flag;
+                document.getElementById("flag").style.display = "block";
+            } else {
+                window.location.href = 'redirect.html';
+            }
         }
-    }
+
+        window.onload = function () {
+            const grid = document.querySelector('.grid');
+            for (let i = 1; i <= 200; i++) {
+                let btn = document.createElement("button");
+                btn.innerText = "Click #" + i;
+                btn.onclick = () => v3rfy(i);
+                grid.appendChild(btn);
+            }
+        }
     </script>
 </head>
 <body>
@@ -85,13 +107,8 @@
         <h1>HackPulse CTF</h1>
         <p>One of these buttons leads to the flag. Can you find it?</p>
 
-        <div class="grid">
-            <script>
-                 for (let i = 1; i <= 200; i++) {
-                    document.write('<button onclick="v3rfy(' + i + ')">Click #' + i + '</button>');
-                }
-            </script>
-        </div>
+        <div class="grid"></div>
+        <div id="flag"></div>
     </div>
 </body>
 </html>
