@@ -1,20 +1,56 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Congratulations!</title>
-    <style>
-        body {
-            background-color: #000;
-            color: #0f0;
-            font-family: Courier New, monospace;
-            text-align: center;
-            margin-top: 15%;
-        }
-    </style>
+  <title>Congratulations!</title>
+  <style>
+    body {
+      background-color: #000;
+      color: #0f0;
+      font-family: Courier New, monospace;
+      text-align: center;
+      margin-top: 15%;
+    }
+    #flag, #error {
+      display: none;
+      font-size: 1.4rem;
+      margin: 1em auto;
+    }
+    a {
+      color: #00ffff;
+      text-decoration: none;
+      font-weight: bold;
+    }
+  </style>
 </head>
 <body>
-    <h1>You found it!</h1>
-    <p>Flag: <strong>flag{lucky_click_ctf_master}</strong></p>
-    <a href="index.html" style="color:#00ffff;">Try Again?</a>
+  <h1>Flag Page</h1>
+  <p id="flag">Flag: <strong>flag{lucky_click_ctf_master}</strong></p>
+  <p id="error">Unauthorized access! No flag for you.</p>
+  <a href="index.html">Go Back</a>
+
+  <script>
+    function getQueryParam(name) {
+      const urlParams = new URLSearchParams(window.location.search);
+      return urlParams.get(name);
+    }
+
+    function decode(str) {
+      try {
+        return parseInt(atob(str), 10);
+      } catch {
+        return null;
+      }
+    }
+
+    const secret = 142;
+    const token = getQueryParam('token');
+    const decoded = decode(token);
+
+    if (decoded === secret) {
+      document.getElementById('flag').style.display = 'block';
+    } else {
+      document.getElementById('error').style.display = 'block';
+    }
+  </script>
 </body>
 </html>
