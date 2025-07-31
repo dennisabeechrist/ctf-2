@@ -61,11 +61,11 @@
     </style>
     <script>
         // Obfuscated secret using XOR
-        const obfSecret = 137; 
+        const obfSecret = 137;  // 142 ^ 11
         const obfKey = 11;
 
         function getSecret() {
-            return obfSecret ^ obfKey;
+            return obfSecret ^ obfKey;  // should be 142
         }
 
         function encode(num) {
@@ -73,7 +73,8 @@
         }
 
         function goto(num) {
-            if (num === getSecret()) {
+            // Ensure num and secret are numbers
+            if (Number(num) === getSecret()) {
                 const token = encode(num);
                 window.location.href = `flag.html?token=${token}`;
             } else {
