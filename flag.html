@@ -29,13 +29,11 @@
   <a href="index.html">Go Back</a>
 
   <script>
-    // Extract "token" param from URL
     function getQueryParam(name) {
       const urlParams = new URLSearchParams(window.location.search);
       return urlParams.get(name);
     }
 
-    // Decode base64 token and parse as integer
     function decode(str) {
       try {
         return parseInt(atob(str), 10);
