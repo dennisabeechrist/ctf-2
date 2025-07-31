@@ -6,7 +6,7 @@
     body {
       background-color: #101010;
       color: #ffffff;
-      font-family: Arial, sans-serif;
+      font-family: 'Fira Code', monospace;
       margin: 0;
       padding: 0;
       display: flex;
@@ -17,14 +17,14 @@
 
     .container {
       background-color: #1a1a1a;
-      border: 2px solid #00ffff;
+      border: 2px solid #00ff00;
       border-radius: 15px;
       padding: 30px;
       width: 95%;
       max-width: 1000px;
       max-height: 90vh;
       overflow-y: auto;
-      box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
+      box-shadow: 0 0 20px rgba(0, 255, 0, 0.3);
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -32,7 +32,7 @@
 
     h1 {
       margin-top: 0;
-      color: #00ffff;
+      color: #00ff00;
       text-align: center;
     }
 
@@ -45,7 +45,7 @@
 
     .grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
       gap: 10px;
       width: 100%;
     }
@@ -53,7 +53,7 @@
     .grid button {
       padding: 10px;
       background-color: #2e2e2e;
-      color: #00ffff;
+      color: #00ff00;
       border: none;
       border-radius: 5px;
       cursor: pointer;
@@ -62,19 +62,27 @@
     }
 
     .grid button:hover {
-      background-color: #00aaaa;
+      background-color: #00aa00;
       color: #000;
     }
 
-    #flag {
+    #flag, #error {
       margin-top: 20px;
       font-family: monospace;
-      color: #00ff00;
       font-size: 1.2em;
       display: none;
     }
+
+    #flag {
+      color: #00ff00;
+    }
+
+    #error {
+      color: red;
+    }
   </style>
   <script>
+    // Pre-hashed SHA-256 of "142"
     const correctHash = '1ebbf9c5104ffb768dcf132b032b16f9e2d818e9ddc870a7a983f889059f9511';
 
     async function hashText(text) {
@@ -82,29 +90,31 @@
       const data = encoder.encode(text);
       const hashBuffer = await crypto.subtle.digest('SHA-256', data);
       const hashArray = Array.from(new Uint8Array(hashBuffer));
-      const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
-      return hashHex;
+      return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
     }
 
-    async function v3rfy(n) {
-      const hashed = await hashText(n.toString());
-      if (hashed === correctHash) {
-        const flag = 'flag{lucky_click_ctf_master}';
-        const flagElem = document.getElementById("flag");
-        flagElem.innerText = "🎉 Congratulations! " + flag;
-        flagElem.style.display = "block";
-        window.scrollTo(0, document.body.scrollHeight);
+    async function handleClick(number) {
+      const hash = await hashText(number.toString());
+      const flagElem = document.getElementById("flag");
+      const errorElem = document.getElementById("error");
+      flagElem.style.display = 'none';
+      errorElem.style.display = 'none';
+
+      if (hash === correctHash) {
+        flagElem.innerText = "✅ flag{lucky_click_ctf_master}";
+        flagElem.style.display = 'block';
       } else {
-        window.location.href = 'redirect.html';
+        errorElem.innerText = "❌ Wrong portal. Try another.";
+        errorElem.style.display = 'block';
       }
     }
 
-    window.onload = function () {
+    window.onload = () => {
       const grid = document.querySelector('.grid');
       for (let i = 1; i <= 200; i++) {
         const btn = document.createElement("button");
-        btn.innerText = "Click #" + i;
-        btn.addEventListener("click", () => v3rfy(i));
+        btn.innerText = "Node #" + i;
+        btn.addEventListener("click", () => handleClick(i));
         grid.appendChild(btn);
       }
     };
@@ -112,10 +122,11 @@
 </head>
 <body>
   <div class="container">
-    <h1>HackPulse CTF</h1>
-    <p>One of these buttons leads to the flag. Can you find it?</p>
+    <h1>💻 HackPulse CTF: Echo Gate</h1>
+    <p>Only one node leads to the flag. Choose wisely.</p>
     <div class="grid"></div>
     <div id="flag"></div>
+    <div id="error"></div>
   </div>
 </body>
 </html>
