@@ -60,22 +60,18 @@
         }
     </style>
     <script>
-        // Obfuscated secret using XOR
-        const obfSecret = 137;  // 142 ^ 11
-        const obfKey = 11;
+        // Secret number (hidden from easy viewing)
+        const secret = 142;
 
-        function getSecret() {
-            return obfSecret ^ obfKey;  // should be 142
-        }
-
+        // Encode secret as base64 string (simple token)
         function encode(num) {
             return btoa(num.toString());
         }
 
         function goto(num) {
-            // Ensure num and secret are numbers
-            if (Number(num) === getSecret()) {
+            if (num === secret) {
                 const token = encode(num);
+                // Pass token via query string
                 window.location.href = `flag.html?token=${token}`;
             } else {
                 window.location.href = 'redirect.html';
