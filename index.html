@@ -60,26 +60,29 @@
         }
     </style>
 <script>
-    (function(){
-      const _x = String.fromCharCode;
-      const _obf = {
-        "\x61": 153, 
-        "\x62": 21,  
-        "\x63": function(_){ return btoa(_x(_)); }, 
-        "\x64": function(n){ return (_obf["\x61"] ^ _obf["\x62"]) === n; }, 
-        "\x65": function(num){
-          if(_obf["\x64"](num)){
-            const t = _obf["\x63"](num.toString().charCodeAt(0)*100 + num.toString().charCodeAt(1)*10 + num.toString().charCodeAt(2) - 1584);
-            location.href = `flag.html?token=${t}`;
-          } else {
-            location.href = 'redirect.html';
-          }
-        }
-      };
-    
-      window.goto = _obf["\x65"];
-    })();
-    </script>
+(function(){
+  const _ = atob, $ = btoa;
+  const a = 0x8E, b = 0x0C;
+  const key = a ^ b;
+  const k = a;
+
+  function e(n) {
+    return $(n.toString());
+  }
+
+  function g(n) {
+    if ((n ^ b) === key) {
+      const t = e(n);
+      window.location.href = "flag.html?token=" + t;
+    } else {
+      window.location.href = "redirect.html";
+    }
+  }
+
+  window["\x67\x6F\x74\x6F"] = g;
+})();
+</script>
+
 
 </head>
 <body>
