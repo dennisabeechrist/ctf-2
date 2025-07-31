@@ -68,15 +68,16 @@
     </style>
 
     <script>
-        const secret = 142;  // The correct button index
-
-        function goto(num) {
-            if (num === secret) {
-                window.location.href = 'flag.html';
-            } else {
-                window.location.href = 'redirect.html';
-            }
+        function v3rfy(n) {
+        const encoded = 'Mjgx'; 
+        const key = 7;
+        const decrypted = parseInt(atob(encoded)) ^ key;
+        if (n === decrypted) {
+            location.href = 'flag.html';
+        } else {
+            location.href = 'redirect.html';
         }
+    }
     </script>
 </head>
 <body>
@@ -86,8 +87,8 @@
 
         <div class="grid">
             <script>
-                for (let i = 1; i <= 200; i++) {
-                    document.write('<button onclick="goto(' + i + ')">Click #' + i + '</button>');
+                 for (let i = 1; i <= 200; i++) {
+                    document.write('<button onclick="v3rfy(' + i + ')">Click #' + i + '</button>');
                 }
             </script>
         </div>
