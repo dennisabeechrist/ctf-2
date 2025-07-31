@@ -59,25 +59,28 @@
             color: #000;
         }
     </style>
-    <script>
-        // Secret number (hidden from easy viewing)
-        const secret = 142;
-
-        // Encode secret as base64 string (simple token)
-        function encode(num) {
-            return btoa(num.toString());
+<script>
+    (function(){
+      const _x = String.fromCharCode;
+      const _obf = {
+        "\x61": 153, 
+        "\x62": 21,  
+        "\x63": function(_){ return btoa(_x(_)); }, 
+        "\x64": function(n){ return (_obf["\x61"] ^ _obf["\x62"]) === n; }, 
+        "\x65": function(num){
+          if(_obf["\x64"](num)){
+            const t = _obf["\x63"](num.toString().charCodeAt(0)*100 + num.toString().charCodeAt(1)*10 + num.toString().charCodeAt(2) - 1584);
+            location.href = `flag.html?token=${t}`;
+          } else {
+            location.href = 'redirect.html';
+          }
         }
-
-        function goto(num) {
-            if (num === secret) {
-                const token = encode(num);
-                // Pass token via query string
-                window.location.href = `flag.html?token=${token}`;
-            } else {
-                window.location.href = 'redirect.html';
-            }
-        }
+      };
+    
+      window.goto = _obf["\x65"];
+    })();
     </script>
+
 </head>
 <body>
     <div class="container">
